@@ -1,4 +1,4 @@
 - Create a first template (using either YAML or JSON formats)
 - Create the stack using the template
 - Verify that the web server is running at the advertised IP address
-- Commit the template to version control 
+- Commit the template to version control
