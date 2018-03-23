@@ -1,0 +1,2 @@
+- Enhance the stack to add an Auto Scaling Group 
+- Enhance the stack to add an Elastic Load Balancer

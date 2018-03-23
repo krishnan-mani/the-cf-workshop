@@ -1,0 +1,2 @@
+- How was the lifecycle configuration created for the Auto Scaling Group?
+- What are wait conditions?
