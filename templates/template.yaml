@@ -8,7 +8,6 @@ Parameters:
     Type: CommaDelimitedList
 
 Resources:
-
   webserverLoadBalancer:
     Type: AWS::ElasticLoadBalancing::LoadBalancer
     Properties:
@@ -45,11 +44,6 @@ Resources:
 
   launchConfiguration:
     Type: AWS::AutoScaling::LaunchConfiguration
-    Properties:
-      InstanceId: !Ref webServer
-
-  webServer:
-    Type: AWS::EC2::Instance
     Metadata:
       AWS::CloudFormation::Init:
         config:
@@ -62,18 +56,18 @@ Resources:
               httpd:
                 enabled: true
                 ensureRunning: true
-
     Properties:
       ImageId: ami-7c87d913
       InstanceType: t2.micro
+      KeyName: km
       SecurityGroups:
-        - !Ref securityGroup
+        - !Sub ${securityGroup.GroupId}
       UserData:
         Fn::Base64:
           !Sub |
             #!/bin/bash -xe
             yum install -y aws-cfn-bootstrap
-            /opt/aws/bin/cfn-init -s ${AWS::StackId} -r webServer --region ${AWS::Region} -v
+            /opt/aws/bin/cfn-init -s ${AWS::StackId} -r launchConfiguration --region ${AWS::Region} -v
 
   securityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -85,6 +79,11 @@ Resources:
           CidrIp: 0.0.0.0/0
           FromPort: 80
           ToPort: 80
+        -
+          IpProtocol: tcp
+          CidrIp: 0.0.0.0/0
+          FromPort: 22
+          ToPort: 22
 
 
 Outputs:
