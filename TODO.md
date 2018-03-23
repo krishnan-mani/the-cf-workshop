@@ -1,1 +1,2 @@
 - Introduce links within the observations, etc.
+- add .json version of templates
