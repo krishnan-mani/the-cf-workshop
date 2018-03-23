@@ -1,4 +1,10 @@
 Resources:
+
+  launchConfiguration:
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Properties:
+      InstanceId: !Ref webServer
+
   webServer:
     Type: AWS::EC2::Instance
     Metadata:
