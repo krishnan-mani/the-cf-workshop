@@ -1,0 +1,2 @@
+- Service roles required for CodePipeline
+- Access to Github required for CodePipeline

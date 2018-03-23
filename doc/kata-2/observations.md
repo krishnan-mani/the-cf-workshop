@@ -1,3 +1,4 @@
+- Troubleshooting stack failures using `--on-failure`
 - Comments on the usage of `Parameters`
 - How was the lifecycle configuration created for the Auto Scaling Group?
 - Using the security group Id (as opposed to security group name)

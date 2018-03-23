@@ -1,0 +1,2 @@
+- Create the pipeline to deploy the stack off the `develop` branch
+- Supply parameter values required for the stack
