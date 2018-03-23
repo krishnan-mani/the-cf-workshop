@@ -103,6 +103,7 @@ Resources:
               - Action:
                   - 'ec2:*'
                   - 'elasticloadbalancing:*'
+                  - 'autoscaling:*'
                 Effect: Allow
                 Resource: '*'
               
