@@ -1,0 +1,3 @@
+- Use continuous deployment early in development
+- Adopt a style guide
+- Adopt [best practices](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/best-practices.html)
