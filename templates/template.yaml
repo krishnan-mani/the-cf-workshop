@@ -1,4 +1,22 @@
+Parameters:
+  DesiredCapacity:
+    Description: desired capacity of auto scaling group containing web servers
+    Type: Number
+    Default: 2
+  InstanceSubnets:
+    Description: List of VPC subnets that instances can be launched in
+    Type: CommaDelimitedList
+
 Resources:
+
+  autoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      DesiredCapacity: !Ref DesiredCapacity
+      LaunchConfigurationName: !Ref launchConfiguration
+      MaxSize: !Ref DesiredCapacity
+      MinSize: !Ref DesiredCapacity
+      VPCZoneIdentifier: !Ref InstanceSubnets
 
   launchConfiguration:
     Type: AWS::AutoScaling::LaunchConfiguration
