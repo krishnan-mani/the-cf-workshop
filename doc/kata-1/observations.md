@@ -1,5 +1,6 @@
-- When to use one format or the other
-- Stack lifecycle
-- significance of the stack lifecycle options
-- Failed to create the stack since the AMI was inapplicable to the default instance type `m3.medium`
+- When to use one format or the other?
+- What are the intrinsic functions introduced?
+- What is the stack lifecycle?
+- What options are available during stack creation, etc.?
+- Error: Failed to create the stack since the AMI was inapplicable to the default instance type `m3.medium`
 - Instance replaced when a security group was assigned
