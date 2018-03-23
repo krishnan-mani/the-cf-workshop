@@ -6,6 +6,15 @@ Parameters:
   InstanceSubnets:
     Description: List of VPC subnets that instances can be launched in
     Type: CommaDelimitedList
+  ImageId:
+    Description: AMI Image Id
+    Type: AWS::EC2::Image::Id
+    Default: ami-7c87d913
+  InstanceType:
+    Description: EC2 instance type used for the webserver instances
+    Type: String
+    Default: t2.micro
+
 
 Resources:
   webserverLoadBalancer:
@@ -57,8 +66,8 @@ Resources:
                 enabled: true
                 ensureRunning: true
     Properties:
-      ImageId: ami-7c87d913
-      InstanceType: t2.micro
+      ImageId: !Ref ImageId
+      InstanceType: !Ref InstanceType
       KeyName: km
       SecurityGroups:
         - !Sub ${securityGroup.GroupId}
