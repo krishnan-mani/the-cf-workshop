@@ -17,7 +17,6 @@ Resources:
     Properties:
       ImageId: ami-7c87d913
       InstanceType: t2.micro
-      KeyName: km
       SecurityGroups:
         - !Ref securityGroup
       UserData:
