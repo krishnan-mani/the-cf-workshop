@@ -1,11 +1,32 @@
 Resources:
   webServer:
     Type: AWS::EC2::Instance
+    Metadata:
+      AWS::CloudFormation::Init:
+        config:
+          packages:
+            yum:
+              httpd: []
+
+          services:
+            sysvinit:
+              httpd:
+                enabled: true
+                ensureRunning: true
+
     Properties:
       ImageId: ami-7c87d913
       InstanceType: t2.micro
+      KeyName: km
       SecurityGroups:
         - !Ref securityGroup
+      UserData:
+        Fn::Base64:
+          !Sub |
+            #!/bin/bash -xe
+            yum update -y aws-cfn-bootstrap
+            /opt/aws/bin/cfn-init -s ${AWS::StackId} -r webServer --region ${AWS::Region} -v
+            echo "Writing to log"
 
   securityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -17,6 +38,12 @@ Resources:
           CidrIp: 0.0.0.0/0
           FromPort: 80
           ToPort: 80
+        -
+          IpProtocol: tcp
+          CidrIp: 0.0.0.0/0
+          FromPort: 22
+          ToPort: 22
+
 
 Outputs:
   webserverIPAddress:

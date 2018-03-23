@@ -1,2 +1,5 @@
+- When to use one format or the other
+- Stack lifecycle
+- significance of the stack lifecycle options
 - Failed to create the stack since the AMI was inapplicable to the default instance type `m3.medium`
 - Instance replaced when a security group was assigned
