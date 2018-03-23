@@ -9,11 +9,36 @@ Parameters:
 
 Resources:
 
+  webserverLoadBalancer:
+    Type: AWS::ElasticLoadBalancing::LoadBalancer
+    Properties:
+      Listeners:
+        -
+          Protocol: HTTP
+          LoadBalancerPort: 80
+          InstancePort: 80
+      SecurityGroups:
+        - !Sub ${loadBalancerSecurityGroup.GroupId}
+      Subnets: !Ref InstanceSubnets
+
+  loadBalancerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: access the load balancer
+      SecurityGroupIngress:
+        -
+          IpProtocol: tcp
+          CidrIp: 0.0.0.0/0
+          FromPort: 80
+          ToPort: 80
+
   autoScalingGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
       DesiredCapacity: !Ref DesiredCapacity
       LaunchConfigurationName: !Ref launchConfiguration
+      LoadBalancerNames:
+        - !Ref webserverLoadBalancer
       MaxSize: !Ref DesiredCapacity
       MinSize: !Ref DesiredCapacity
       VPCZoneIdentifier: !Ref InstanceSubnets
@@ -63,5 +88,5 @@ Resources:
 
 
 Outputs:
-  webserverIPAddress:
-    Value: !Sub ${webServer.PublicIp}
+  webserverURL:
+    Value: !Sub ${webserverLoadBalancer.DNSName}
