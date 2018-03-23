@@ -24,7 +24,7 @@ Resources:
         Fn::Base64:
           !Sub |
             #!/bin/bash -xe
-            yum update -y aws-cfn-bootstrap
+            yum install -y aws-cfn-bootstrap
             /opt/aws/bin/cfn-init -s ${AWS::StackId} -r webServer --region ${AWS::Region} -v
 
   securityGroup:
@@ -37,11 +37,6 @@ Resources:
           CidrIp: 0.0.0.0/0
           FromPort: 80
           ToPort: 80
-        -
-          IpProtocol: tcp
-          CidrIp: 0.0.0.0/0
-          FromPort: 22
-          ToPort: 22
 
 
 Outputs:
