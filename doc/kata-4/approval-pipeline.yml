@@ -28,6 +28,13 @@ Parameters:
   StackInstanceSubnets:
     Description: List of VPC subnets that instances can be launched in
     Type: String
+  StackEnvironment:
+    Description: Environment that the application is being deployed to
+    Type: String
+    AllowedValues:
+      - dev
+      - live
+    Default: live
 
 Resources:
   ArtifactStoreBucket:
@@ -88,7 +95,8 @@ Resources:
                 TemplatePath: "TemplateSource::templates/template.yaml"
                 ParameterOverrides: !Sub |
                   {
-                    "InstanceSubnets": "${StackInstanceSubnets}"
+                    "InstanceSubnets": "${StackInstanceSubnets}",
+                    "Environment": "${StackEnvironment}"
                   }
               RunOrder: 1
 
