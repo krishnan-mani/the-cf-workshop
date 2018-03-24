@@ -78,7 +78,7 @@ Resources:
                 enabled: true
                 ensureRunning: true
     Properties:
-      ImageId: !Ref ImageId
+      ImageId: !FindInMap [ ImageIdByRegion, !Ref 'AWS::Region', AMI ]
       InstanceType: !Ref InstanceType
       KeyName: km
       SecurityGroups:
@@ -100,6 +100,14 @@ Resources:
           SourceSecurityGroupId: !Sub ${loadBalancerSecurityGroup.GroupId}
           FromPort: 80
           ToPort: 80
+
+
+Mappings:
+  ImageIdByRegion:
+    ap-south-1:
+      AMI: ami-7c87d913
+    us-east-1:
+      AMI: ami-1853ac65
 
 
 Outputs:
