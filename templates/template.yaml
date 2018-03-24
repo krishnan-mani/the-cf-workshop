@@ -16,7 +16,17 @@ Parameters:
     Description: EC2 instance type used for the webserver instances
     Type: String
     Default: t2.micro
+  Environment:
+    Description: Name of the application environment
+    Type: String
+    AllowedValues:
+      - dev
+      - live
+    Default: dev
+    ConstraintDescription: specify either dev or live
 
+Conditions:
+  IsLiveEnvironment: !Equals [ !Ref Environment, live ]
 
 Resources:
   webserverLoadBalancer:
@@ -49,8 +59,8 @@ Resources:
       LaunchConfigurationName: !Ref launchConfiguration
       LoadBalancerNames:
         - !Ref webserverLoadBalancer
-      MaxSize: !Ref DesiredCapacity
-      MinSize: !Ref DesiredCapacity
+      MaxSize: !If [IsLiveEnvironment, 4, 2]
+      MinSize: !If [IsLiveEnvironment, 2, 0]
       VPCZoneIdentifier: !Ref InstanceSubnets
 
   launchConfiguration:
