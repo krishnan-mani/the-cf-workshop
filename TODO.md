@@ -1,2 +1,3 @@
 - Introduce links within the observations, etc.
 - add .json version of templates
+- Add routine steps to work with templates, stacks, and version control
