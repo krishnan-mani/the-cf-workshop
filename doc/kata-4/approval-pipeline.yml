@@ -25,6 +25,9 @@ Parameters:
       The name of the application. This will be used as part of the name of the stack, as well as the name of the pipeline
     Type: String
     Default: webapp
+  NotifyEmail:
+    Description: The email address to notify for approval actions in the pipeline
+    Type: String
   StackInstanceSubnets:
     Description: List of VPC subnets that instances can be launched in
     Type: String
@@ -35,6 +38,13 @@ Resources:
     Properties:
       VersioningConfiguration:
         Status: Enabled
+
+  CodePipelineSNSTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      Subscription:
+        - Endpoint: !Ref NotifyEmail
+          Protocol: email
 
   Pipeline:
     Type: AWS::CodePipeline::Pipeline
@@ -83,7 +93,18 @@ Resources:
                   {
                     "InstanceSubnets": "${StackInstanceSubnets}"
                   }
+              RunOrder: 1
 
+            - Name: ApproveChangeSet
+              ActionTypeId:
+                Category: Approval
+                Owner: AWS
+                Provider: Manual
+                Version: 1
+              Configuration:
+                NotificationArn: !Ref CodePipelineSNSTopic
+                CustomData: !Sub 'Please review the change set created against ${ApplicationName}-${BranchName} stack'
+              RunOrder: 2
 
   CFNRole:
     Type: AWS::IAM::Role
