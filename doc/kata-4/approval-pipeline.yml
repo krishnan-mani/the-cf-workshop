@@ -1,10 +1,6 @@
 AWSTemplateFormatVersion: "2010-09-09"
 
-Description: >
-  This template builds a pipeline using AWS CodePipeline to deploy changes
-  committed to a specified branch on a repository in Github. The pipeline
-  creates a change set against the stack, notifies the SNS topic for approval,
-  and on approval, executes the change set
+Description: Creates a pipeline that executes a change set upon approval
 
 Parameters:
   RepositoryName:

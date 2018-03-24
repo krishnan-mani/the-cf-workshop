@@ -1,3 +1,5 @@
+Description: Deploys webservers to an AutoScaling Group with a load balancer
+
 Resources:
   webServer:
     Type: AWS::EC2::Instance
