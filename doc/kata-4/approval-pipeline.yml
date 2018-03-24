@@ -106,6 +106,19 @@ Resources:
                 CustomData: !Sub 'Please review the change set created against ${ApplicationName}-${BranchName} stack'
               RunOrder: 2
 
+            - Name: ExecuteChangeSet
+              ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Provider: CloudFormation
+                Version: 1
+              Configuration:
+                ActionMode: CHANGE_SET_EXECUTE
+                StackName: !Sub "${ApplicationName}-${BranchName}"
+                ChangeSetName: master
+                RoleArn: !Sub ${CFNRole.Arn}
+              RunOrder: 3
+
   CFNRole:
     Type: AWS::IAM::Role
     Properties:
