@@ -7,3 +7,5 @@
 - Change templates to use fine-grained privileges
 - Demonstrate Jenkins version
 - Updates to `Description` in the template are not considered as updates to the stack
+- Steps for each kata
+- Validate use of `CommaDelimitedList` parameter type

@@ -1,9 +1,10 @@
 Pre-requisites:
 ====
 
+- an account on Github
+- git version control client
 - AWS account
 - AWS CLI installed and configured with credentials privileged to operate upon CloudFormation and EC2 resources
-- git version control client
 - text editor to edit YAML and JSON files
 
 Organisation
