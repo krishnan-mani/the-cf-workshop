@@ -1,0 +1,3 @@
+- Create separate pipelines that deploy off the `develop` and `master` branches to different environments
+- Introduce `Mappings` for the choice of `ImageId` by `AWS::Region` 
+- Introduce `Conditions` to scale environments independently
