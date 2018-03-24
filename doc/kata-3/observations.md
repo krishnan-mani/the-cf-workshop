@@ -1,5 +1,7 @@
+- Acknowledge IAM resource actions using `capabilities`
 - Service roles required for CodePipeline
 - Access to Github required for CodePipeline
 - Use fine-grained privileges when granting access to pipelines 
-- Use of `ParameterOverrides` to communicate parameter information to CloudFormation stack 
+- Use of `ParameterOverrides` to communicate parameter information to CloudFormation stack
+- Use AWS-specific parameter types where possible
 - On the time taken to provision and de-provision stacks

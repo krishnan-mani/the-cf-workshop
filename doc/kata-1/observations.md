@@ -7,6 +7,7 @@
 - How is a stack updated?
 - Why was the instance replaced when a security group was assigned?
 - What happens when resources are modified outside of the stack?
+- About the implicit use of default VPC to deploy resources
 
 Errors:
 ====
