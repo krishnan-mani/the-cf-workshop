@@ -40,3 +40,4 @@ $ aws cloudformation delete-stack \
 
 - Verify that the web server is running at the advertised IP address (available as a stack output)
 - Commit the template to version control
+- On to [kata-2](../kata-2/HOW-TO.md)
