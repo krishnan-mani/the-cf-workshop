@@ -1,2 +1,3 @@
+- Using change sets to review proposed stack updates 
 - Using `Mappings` to resolve `ImageId` by `AWS::Region`
 - Using `Conditions` to customise the stack by environment
