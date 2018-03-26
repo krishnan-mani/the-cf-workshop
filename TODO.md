@@ -5,6 +5,7 @@
 - Steps for each kata
 - Rename mapping
 - Validate use of `CommaDelimitedList` parameter type
+- Find the right imagery to communicate the concepts
 - add .json version of templates
 - Updates to `Description` in the template are not considered as updates to the stack
 - Using a file to provide `Parameters` information
