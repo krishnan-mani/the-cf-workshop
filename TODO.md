@@ -1,5 +1,6 @@
 - Introduce links within the observations, etc.
 - Add routine steps to work with templates, stacks, and version control
+- Add a `DeletePolicy` to the buckets used with the pipelines to reduce inconvenience 
 - Change templates to use fine-grained privileges
 - Steps for each kata
 - Rename mapping

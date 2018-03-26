@@ -1,7 +1,8 @@
-- Acknowledge IAM resource actions using `capabilities`
-- Service roles required for CodePipeline
-- Access to Github required for CodePipeline
-- Use fine-grained privileges when granting access to pipelines 
-- Use of `ParameterOverrides` to communicate parameter information to CloudFormation stack
-- Use AWS-specific parameter types where possible
+- Setup access to Github for CodePipeline, and generate a personal access token
+- Acknowledge stack actions on IAM resources by asserting [`capabilities`](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-iam-template.html#using-iam-capabilities)
+- Review the service role required for CodePipeline
+- Review the service role used by CloudFormation when provisioning the stack, and understand how CloudFormation uses privileges, whether supplied by the user or via service role 
+- Caution! Remember to delete the stack provisioned by the pipeline, before deleting the pipeline 
+- Using a [`DeletionPolicy`](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-attribute-deletionpolicy.html) with resources 
+- Use fine-grained privileges when granting access
 - On the time taken to provision and de-provision stacks

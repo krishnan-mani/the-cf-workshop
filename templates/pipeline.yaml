@@ -1,9 +1,7 @@
 AWSTemplateFormatVersion: "2010-09-09"
 
 Description: >
-  This template builds a pipeline using AWS CodePipeline to deploy changes
-  committed to a specified branch on a repository in Github to create or update a
-  stack in AWS CloudFormation
+  Creates a pipeline to deploy stack in CloudFormation off specified branch
 
 Parameters:
   RepositoryName:
@@ -25,9 +23,6 @@ Parameters:
       The name of the application. This will be used as part of the name of the stack, as well as the name of the pipeline
     Type: String
     Default: webapp
-  StackInstanceSubnets:
-    Description: List of VPC subnets that instances can be launched in
-    Type: String
 
 Resources:
   ArtifactStoreBucket:
@@ -78,10 +73,6 @@ Resources:
                 RoleArn: !Sub ${CFNRole.Arn}
                 StackName: !Sub "${ApplicationName}-${BranchName}"
                 TemplatePath: "TemplateSource::templates/template.yaml"
-                ParameterOverrides: !Sub |
-                  {
-                    "InstanceSubnets": "${StackInstanceSubnets}"
-                  }
 
 
   CFNRole:
