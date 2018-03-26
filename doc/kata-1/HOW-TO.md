@@ -1,3 +1,6 @@
+
+Story 1: Deploy web application to an EC2 instance
+
 - Create a first template (using either YAML or JSON formats)
 
 ```

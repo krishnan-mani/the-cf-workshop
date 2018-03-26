@@ -1,10 +1,10 @@
-- Troubleshooting stack failures using `--on-failure`
-- Comments on the usage of `Parameters`
 - How was the lifecycle configuration created for the Auto Scaling Group?
+- Troubleshooting stack failures using `--on-failure`
+- Introducing and using `Parameters`
 - Using the security group Id (as opposed to security group name)
 - Practices to follow when evolving a template
     - one change at a time
-    - use change-sets
+    - using change-sets
     - provisioning stacks from scratch versus updating stacks
 - Aspects not covered:
     - `UpdatePolicy` for `AutoScalingGroup`
