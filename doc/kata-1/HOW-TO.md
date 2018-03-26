@@ -1,7 +1,7 @@
 
 Story 1: Deploy web application to an EC2 instance
 
-- (optional) You may choose to fork this repository into your account and clone either this repository or your fork locally 
+- (optional) You may choose to clone this repository (or your fork of it). Alternatively, create a local repository from scratch
 - Create a first template (using either YAML or JSON formats)
 
 ```
@@ -42,6 +42,7 @@ $ aws cloudformation wait stack-update-complete --stack-name webapp-dev
 # Delete stack (if needed)
 $ aws cloudformation delete-stack \
     --stack-name webapp-dev
+
 ```  
 
 - Verify that the web server is running at the published IP address (available as a stack output)
