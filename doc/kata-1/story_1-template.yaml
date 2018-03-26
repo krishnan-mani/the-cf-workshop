@@ -1,4 +1,4 @@
-Description: Deploys webservers to an AutoScaling Group with a load balancer
+Description: Deploys a single webserver instance
 
 Resources:
   webServer:
