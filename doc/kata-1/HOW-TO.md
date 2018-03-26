@@ -66,4 +66,4 @@ $ git push origin develop
 
 ```
 
-- On to [kata-2](../kata-2/HOW-TO.md)
+- onwards to [kata-2](../kata-2/HOW-TO.md)

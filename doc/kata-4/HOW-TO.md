@@ -7,6 +7,11 @@ Story 4: Deploy environments for both `dev` and `live`
     - Changes will only be deployed to the stack when approved (the pipeline will execute the corresponding change-set)
 
 ```
+# Copy approval-pipeline.yaml to templates/approval-pipeline.yaml
+# Copy approval-pipeline-parameters.example.json to templates/approval-pipeline-parameters.json
+# Edit templates/approval-pipeline-parameters.json and provide the parameter information
+# Create a stack to provision the pipeline in CodePipeline
+
 $ aws cloudformation create-stack \
     --stack-name pipeline pipeline-webapp-master \
     --template-body file://templates/approval-pipeline.yaml \

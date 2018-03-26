@@ -3,7 +3,8 @@ Story 2: Create a pipeline for Continuous Deployment
 - Create a pipeline to deploy the stack off the `develop` branch
 
 ```
-# Copy templates/pipeline-parameters.example.json to templates/pipeline-parameters.json
+# Copy pipeline.yaml to templates/pipeline.yaml
+# Copy pipeline-parameters.example.json to templates/pipeline-parameters.json
 # Edit templates/pipeline-parameters.json and provide the repository owner and personal access token from Github
 # Create a stack to provision the pipeline in CodePipeline
 
@@ -15,7 +16,7 @@ $ aws cloudformation create-stack \
 
 ```
 
-- Ensure that the pipeline runs successfully and deploys the CloudFormation stack named `webapp-develop`. Pay attention to the caveats below:
+- Ensure that the pipeline runs successfully and deploys the CloudFormation stack named `webapp-develop`
 - Delete the stack created earlier by hand (`webapp-dev`)
 
 ```
@@ -25,5 +26,5 @@ $ aws cloudformation delete-stack \
 ```
 
 - All subsequent template changes will be deployed to the stack by the pipeline, on changes being pushed to the `develop` branch
-- Commit the changes and move on to [kata-3](../kata-3/HOW-TO.md) 
+- onwards to [kata-3](../kata-3/HOW-TO.md) 
 
