@@ -1,12 +1,12 @@
 - Introduce links within the observations, etc.
-- add .json version of templates
 - Add routine steps to work with templates, stacks, and version control
+- Change templates to use fine-grained privileges
+- Steps for each kata
+- Rename mapping
+- Validate use of `CommaDelimitedList` parameter type
+- add .json version of templates
+- Updates to `Description` in the template are not considered as updates to the stack
 - Using a file to provide `Parameters` information
 - Add a style guide
 - Add suggested exercises
-- Change templates to use fine-grained privileges
 - Demonstrate Jenkins version
-- Updates to `Description` in the template are not considered as updates to the stack
-- Steps for each kata
-- Validate use of `CommaDelimitedList` parameter type
-- Rename mapping
