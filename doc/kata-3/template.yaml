@@ -1,40 +1,21 @@
-Description: Deploys webservers to an AutoScaling Group with a load balancer
-
 Parameters:
   DesiredCapacity:
-    Description: desired capacity of auto scaling group containing web servers
+    Description: desired capacity of webservers in the auto scaling group
     Type: Number
     Default: 2
-  InstanceSubnets:
-    Description: List of VPC subnets that instances can be launched in
-    Type: CommaDelimitedList
-  ImageId:
-    Description: AMI Image Id
-    Type: AWS::EC2::Image::Id
-    Default: ami-7c87d913
-  InstanceType:
-    Description: EC2 instance type used for the webserver instances
-    Type: String
-    Default: t2.micro
+  PublicSubnetOneId:
+    Description: A public subnet Id to use for the load balancer
+    Type: AWS::EC2::Subnet::Id
+  PublicSubnetTwoId:
+    Description: A public subnet Id to use for the load balancer, in a different availability zone
+    Type: AWS::EC2::Subnet::Id
 
 
 Resources:
-  webserverLoadBalancer:
-    Type: AWS::ElasticLoadBalancing::LoadBalancer
-    Properties:
-      Listeners:
-        -
-          Protocol: HTTP
-          LoadBalancerPort: 80
-          InstancePort: 80
-      SecurityGroups:
-        - !Sub ${loadBalancerSecurityGroup.GroupId}
-      Subnets: !Ref InstanceSubnets
-
   loadBalancerSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: access the load balancer
+      GroupDescription: load balancer security group
       SecurityGroupIngress:
         -
           IpProtocol: tcp
@@ -42,16 +23,35 @@ Resources:
           FromPort: 80
           ToPort: 80
 
+  loadBalancer:
+    Type: AWS::ElasticLoadBalancing::LoadBalancer
+    Properties:
+      CrossZone: true
+      Listeners:
+        -
+          InstancePort: 80
+          InstanceProtocol: HTTP
+          LoadBalancerPort: 80
+          Protocol: HTTP
+
+      SecurityGroups:
+        - !Sub ${loadBalancerSecurityGroup.GroupId}
+      Subnets:
+        - !Ref PublicSubnetOneId
+        - !Ref PublicSubnetTwoId
+
   autoScalingGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
       DesiredCapacity: !Ref DesiredCapacity
       LaunchConfigurationName: !Ref launchConfiguration
       LoadBalancerNames:
-        - !Ref webserverLoadBalancer
+        - !Ref loadBalancer
       MaxSize: !Ref DesiredCapacity
-      MinSize: !Ref DesiredCapacity
-      VPCZoneIdentifier: !Ref InstanceSubnets
+      MinSize: 0
+      VPCZoneIdentifier:
+        - !Ref PublicSubnetOneId
+        - !Ref PublicSubnetTwoId
 
   launchConfiguration:
     Type: AWS::AutoScaling::LaunchConfiguration
@@ -68,22 +68,21 @@ Resources:
                 enabled: true
                 ensureRunning: true
     Properties:
-      ImageId: !Ref ImageId
-      InstanceType: !Ref InstanceType
-      KeyName: km
+      ImageId: ami-7c87d913
+      InstanceType: t2.micro
       SecurityGroups:
         - !Sub ${securityGroup.GroupId}
       UserData:
         Fn::Base64:
           !Sub |
-            #!/bin/bash -xe
+            #!/bin/bash -eux
             yum install -y aws-cfn-bootstrap
             /opt/aws/bin/cfn-init -s ${AWS::StackId} -r launchConfiguration --region ${AWS::Region} -v
 
   securityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: access web application
+      GroupDescription: security group for webserver
       SecurityGroupIngress:
         -
           IpProtocol: tcp
@@ -91,7 +90,8 @@ Resources:
           FromPort: 80
           ToPort: 80
 
-
 Outputs:
-  webserverURL:
-    Value: !Sub ${webserverLoadBalancer.DNSName}
+  loadBalancerDNSName:
+    Description: DNS name for the load balancer
+    Value: !Sub ${loadBalancer.DNSName}
+
