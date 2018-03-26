@@ -1,0 +1,12 @@
+[
+  {
+    "ParameterKey": "RepositoryOwner",
+    "ParameterValue": "TO-BE-REPLACED"
+    // replace with the owner of the repository on Github containing the templates to deploy
+  },
+  {
+    "ParameterKey": "GithubAccessToken",
+    "ParameterValue": "TO-BE-REPLACED"
+    // replace with a personal access token from your account on Github
+  }
+]
