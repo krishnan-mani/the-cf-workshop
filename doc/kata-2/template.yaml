@@ -1,60 +1,8 @@
 Description: Deploys webservers to an AutoScaling Group with a load balancer
 
-Parameters:
-  DesiredCapacity:
-    Description: desired capacity of auto scaling group containing web servers
-    Type: Number
-    Default: 2
-  InstanceSubnets:
-    Description: List of VPC subnets that instances can be launched in
-    Type: CommaDelimitedList
-  ImageId:
-    Description: AMI Image Id
-    Type: AWS::EC2::Image::Id
-    Default: ami-7c87d913
-  InstanceType:
-    Description: EC2 instance type used for the webserver instances
-    Type: String
-    Default: t2.micro
-
-
 Resources:
-  webserverLoadBalancer:
-    Type: AWS::ElasticLoadBalancing::LoadBalancer
-    Properties:
-      Listeners:
-        -
-          Protocol: HTTP
-          LoadBalancerPort: 80
-          InstancePort: 80
-      SecurityGroups:
-        - !Sub ${loadBalancerSecurityGroup.GroupId}
-      Subnets: !Ref InstanceSubnets
-
-  loadBalancerSecurityGroup:
-    Type: AWS::EC2::SecurityGroup
-    Properties:
-      GroupDescription: access the load balancer
-      SecurityGroupIngress:
-        -
-          IpProtocol: tcp
-          CidrIp: 0.0.0.0/0
-          FromPort: 80
-          ToPort: 80
-
-  autoScalingGroup:
-    Type: AWS::AutoScaling::AutoScalingGroup
-    Properties:
-      DesiredCapacity: !Ref DesiredCapacity
-      LaunchConfigurationName: !Ref launchConfiguration
-      LoadBalancerNames:
-        - !Ref webserverLoadBalancer
-      MaxSize: !Ref DesiredCapacity
-      MinSize: !Ref DesiredCapacity
-      VPCZoneIdentifier: !Ref InstanceSubnets
-
-  launchConfiguration:
-    Type: AWS::AutoScaling::LaunchConfiguration
+  webServer:
+    Type: AWS::EC2::Instance
     Metadata:
       AWS::CloudFormation::Init:
         config:
@@ -67,18 +15,18 @@ Resources:
               httpd:
                 enabled: true
                 ensureRunning: true
+
     Properties:
-      ImageId: !Ref ImageId
-      InstanceType: !Ref InstanceType
-      KeyName: km
+      ImageId: ami-7c87d913
+      InstanceType: t2.micro
       SecurityGroups:
-        - !Sub ${securityGroup.GroupId}
+        - !Ref securityGroup
       UserData:
         Fn::Base64:
           !Sub |
             #!/bin/bash -xe
             yum install -y aws-cfn-bootstrap
-            /opt/aws/bin/cfn-init -s ${AWS::StackId} -r launchConfiguration --region ${AWS::Region} -v
+            /opt/aws/bin/cfn-init -s ${AWS::StackId} -r webServer --region ${AWS::Region} -v
 
   securityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -87,11 +35,11 @@ Resources:
       SecurityGroupIngress:
         -
           IpProtocol: tcp
-          SourceSecurityGroupId: !Sub ${loadBalancerSecurityGroup.GroupId}
+          CidrIp: 0.0.0.0/0
           FromPort: 80
           ToPort: 80
 
 
 Outputs:
-  webserverURL:
-    Value: !Sub ${webserverLoadBalancer.DNSName}
+  webserverIPAddress:
+    Value: !Sub ${webServer.PublicIp}

@@ -6,6 +6,8 @@
 - Rename mapping
 - Validate use of `CommaDelimitedList` parameter type
 - Find the right imagery to communicate the concepts
+    - hot-water tap on water dispenser to illustrate capabilities
+    - add cricket quiz
 - add .json version of templates
 - Updates to `Description` in the template are not considered as updates to the stack
 - Using a file to provide `Parameters` information

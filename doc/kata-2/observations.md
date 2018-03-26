@@ -4,5 +4,6 @@
 - Review the service role used by CloudFormation when provisioning the stack, and understand how CloudFormation uses privileges, whether supplied by the user or via service role 
 - Caution! Remember to delete the stack provisioned by the pipeline, before deleting the pipeline 
 - Using a [`DeletionPolicy`](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-attribute-deletionpolicy.html) with resources 
+- Also comment upon explicit dependencies between resources using `DependsOn`
 - Use fine-grained privileges when granting access
 - On the time taken to provision and de-provision stacks
