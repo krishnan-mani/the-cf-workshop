@@ -3,7 +3,6 @@
 ```
 # Copy templates/pipeline-parameters.example.json to templates/pipeline-parameters.json
 # Edit templates/pipeline-parameters.json and provide the repository owner and personal access token from Github
-
 # Create a stack to provision the pipeline in CodePipeline
 $ aws cloudformation create-stack \
     --stack-name pipeline-webapp-develop \
@@ -25,5 +24,6 @@ $ aws cloudformation delete-stack \
     
 ```
 
-- From this point onwards, all template changes will be deployed to the stack using the pipeline, when changes are pushed to the `develop` branch. Remember to commit changes to a template on the `develop` branch, and push changes to the `remote` to trigger an update to the stack  
+- From this point onwards, all template changes will be deployed to the stack using the pipeline, when changes are pushed to the `develop` branch. 
+- Remember to commit changes to a template on the `develop` branch, and push changes to the `remote` to trigger an update to the stack  
 

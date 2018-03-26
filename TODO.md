@@ -4,6 +4,7 @@
 - Change templates to use fine-grained privileges
 - Steps for each kata
 - Rename mapping
+- Add `NoEcho` to `GithubAccessToken`
 - Validate use of `CommaDelimitedList` parameter type
 - Find the right imagery to communicate the concepts
     - hot-water tap on water dispenser to illustrate capabilities
