@@ -1,3 +1,5 @@
+Story 3: Add an Auto Scaling Group and load balancer
+
 - Remember to commit changes to the template to version control on the `develop` branch, and push changes to the `remote` to provision the `webapp-develop` stack
 
 ```
@@ -20,7 +22,7 @@ $ aws ec2 describe-subnets \
     - Remove the EC2 instance for thw webserver, which is no longer needed 
     
 - Enhance the template for the pipeline to communicate parameter information required for the `webapp-develop` stack. 
-- Update the `pipeline-webapp-develop` stack for the pipeline, and verify that the `webapp-develop` stack is provisioned successfully
+- Update the `pipeline-webapp-develop` stack for the pipeline to supply parameter information, and verify that the `webapp-develop` stack is provisioned successfully
 
 ```
 # Copy templates/with-subnets-pipeline-parameters.example.json to templates/with-subnets-pipeline-parameters.json

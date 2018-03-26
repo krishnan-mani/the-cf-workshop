@@ -1,3 +1,5 @@
+Story 2: Create a pipeline for Continuous Deployment
+
 - Create a pipeline to deploy the stack off the `develop` branch
 
 ```
@@ -22,5 +24,6 @@ $ aws cloudformation delete-stack \
     
 ```
 
-- All subsequent template changes will be deployed to the stack by the pipeline, on changes being pushed to the `develop` branch  
+- All subsequent template changes will be deployed to the stack by the pipeline, on changes being pushed to the `develop` branch
+- Commit the changes and move on to [kata-3](../kata-3/HOW-TO.md) 
 
