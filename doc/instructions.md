@@ -18,8 +18,10 @@ Pre-requisites:
 Organisation
 ====
 
-- Instructions for each kata are in the HOW-TO.md document in the corresponding folder
-- You may wish to review the observations accompanying the kata, once you've completed it.
-- There is also a general note on [usage](usage/CloudFormation.md) of CloudFormation API actions using the AWS CLI
+- Templates and notes for each kata are in a folder in `doc` named after the kata (say, [kata-1](kata-1))
+- Instructions for each kata are in the HOW-TO.md document (say, [HOW-TO](kata-1/HOW-TO.md))
+- A completed template at the conclusion of each kata is provided for reference (say, [Story 1 template](kata-1/story_1-template.yaml))
+- [Template](kata-2/pipeline.yaml) and [example parameter file](kata-2/pipeline-parameters.example.json) to be used to provision stacks for the pipelines are provided
+- You may wish to review the observations accompanying the kata, as you work on it (say, [observations](kata-1/observations.md))
 
 
