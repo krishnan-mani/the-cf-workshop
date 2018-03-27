@@ -1,3 +1,5 @@
+Description: Deploys an Auto Scaling Group of webservers with a load balancer
+
 Parameters:
   DesiredCapacity:
     Description: desired capacity of webservers in the auto scaling group

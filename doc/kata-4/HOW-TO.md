@@ -29,4 +29,3 @@ $ aws cloudformation create-stack \
     
 - Introduce `Conditions` to scale environments independently
     - Specify different values for `MaxSize` and `MinSize` in the `dev` and `live` environments
-- Introduce `Mappings` for the choice of `ImageId` by `AWS::Region` 
