@@ -5,6 +5,6 @@ Goal
 - Provision multiple environments, including `dev` (for development) and `live` (for production). Each environment may be scaled independently.  
 - Use continuous deployment for rapid evolution of application environments 
 
-Later
+Later,
 
-- Enable content acceleration for the web application using CloudFront (to be managed by a different team)
+- [ ] Enable content acceleration for the web application using CloudFront (to be managed by a different team)
