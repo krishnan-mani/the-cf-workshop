@@ -1,5 +1,5 @@
 
-Story 4: Deploy environments for both `dev` and `live`
+Story 4: Deploy environments for both `dev` and `live` and customise the environments
 
 - Enhance the template to introduce a parameter that designates the environment as either `dev` or `live`  
 
