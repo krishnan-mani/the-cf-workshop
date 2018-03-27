@@ -1,0 +1,186 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: Creates a pipeline that executes a change set upon approval
+
+Parameters:
+  RepositoryName:
+    Description: The repository on Github to deploy from
+    Type: String
+    Default: the-cf-workshop
+  RepositoryOwner:
+    Description: Account or organisation that owns the repository on Github
+    Type: String
+  GithubAccessToken:
+    Description: Personal access token generated for Github
+    Type: String
+    NoEcho: true
+  BranchName:
+    Description: The branch in version control to retrieve changes from
+    Type: String
+    Default: master
+  ApplicationName:
+    Description: >
+      The name of the application. This will be used as part of the name of the stack, as well as the name of the pipeline
+    Type: String
+    Default: webapp
+  NotifyEmail:
+    Description: The email address to notify for approval actions in the pipeline
+    Type: String
+  PublicSubnetOneId:
+    Description: A public subnet Id to use for the load balancer
+    Type: AWS::EC2::Subnet::Id
+  PublicSubnetTwoId:
+    Description: A public subnet Id to use for the load balancer
+    Type: AWS::EC2::Subnet::Id
+  Environment:
+    Description: Environment that the application is being deployed to
+    Type: String
+    AllowedValues:
+      - dev
+      - live
+    Default: live
+
+Resources:
+  ArtifactStoreBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    Properties:
+      VersioningConfiguration:
+        Status: Enabled
+
+  CodePipelineSNSTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      Subscription:
+        - Endpoint: !Ref NotifyEmail
+          Protocol: email
+
+  Pipeline:
+    Type: AWS::CodePipeline::Pipeline
+    Properties:
+      ArtifactStore:
+        Location: !Ref 'ArtifactStoreBucket'
+        Type: S3
+      DisableInboundStageTransitions: []
+      Name: !Sub "${ApplicationName}-${BranchName}"
+      RoleArn: !GetAtt [PipelineRole, Arn]
+      Stages:
+        - Name: Source
+          Actions:
+            - Name: Github
+              ActionTypeId:
+                Category: Source
+                Owner: ThirdParty
+                Provider: GitHub
+                Version: 1
+              Configuration:
+                Repo: !Ref RepositoryName
+                Branch: !Ref BranchName
+                Owner: !Ref RepositoryOwner
+                OAuthToken: !Ref GithubAccessToken
+
+              OutputArtifacts:
+                - Name: TemplateSource
+
+        - Name: Stack
+          Actions:
+            - Name: CreateChangeSet
+              ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Provider: CloudFormation
+                Version: 1
+              InputArtifacts:
+                - Name: TemplateSource
+              Configuration:
+                ActionMode: CHANGE_SET_REPLACE
+                RoleArn: !Sub ${CFNRole.Arn}
+                StackName: !Sub "${ApplicationName}-${BranchName}"
+                ChangeSetName: master
+                TemplatePath: "TemplateSource::templates/template.yaml"
+                ParameterOverrides: !Sub |
+                  {
+                    "Environment": "${Environment}",
+                    "PublicSubnetOneId": "${PublicSubnetOneId}",
+                    "PublicSubnetTwoId": "${PublicSubnetTwoId}"
+                  }
+              RunOrder: 1
+
+            - Name: ApproveChangeSet
+              ActionTypeId:
+                Category: Approval
+                Owner: AWS
+                Provider: Manual
+                Version: 1
+              Configuration:
+                NotificationArn: !Ref CodePipelineSNSTopic
+                CustomData: !Sub 'Please review the change set created against ${ApplicationName}-${BranchName} stack'
+              RunOrder: 2
+
+            - Name: ExecuteChangeSet
+              ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Provider: CloudFormation
+                Version: 1
+              Configuration:
+                ActionMode: CHANGE_SET_EXECUTE
+                StackName: !Sub "${ApplicationName}-${BranchName}"
+                ChangeSetName: master
+                RoleArn: !Sub ${CFNRole.Arn}
+              RunOrder: 3
+
+  CFNRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+        - Action: ['sts:AssumeRole']
+          Effect: Allow
+          Principal:
+            Service: [cloudformation.amazonaws.com]
+        Version: '2012-10-17'
+      Path: /
+      Policies:
+        - PolicyName: CloudFormationRole
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Action:
+                  - 'ec2:*'
+                  - 'elasticloadbalancing:*'
+                  - 'autoscaling:*'
+                Effect: Allow
+                Resource: '*'
+              
+  PipelineRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+        - Action: ['sts:AssumeRole']
+          Effect: Allow
+          Principal:
+            Service: [codepipeline.amazonaws.com]
+        Version: '2012-10-17'
+      Path: /
+      Policies:
+        - PolicyName: CodePipelineAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Action:
+                - 's3:*'
+                - 'cloudformation:CreateStack'
+                - 'cloudformation:DescribeStacks'
+                - 'cloudformation:DeleteStack'
+                - 'cloudformation:UpdateStack'
+                - 'cloudformation:CreateChangeSet'
+                - 'cloudformation:ExecuteChangeSet'
+                - 'cloudformation:DeleteChangeSet'
+                - 'cloudformation:DescribeChangeSet'
+                - 'cloudformation:SetStackPolicy'
+                - 'iam:PassRole'
+                - 'sns:Publish'
+                Effect: Allow
+                Resource: '*'
