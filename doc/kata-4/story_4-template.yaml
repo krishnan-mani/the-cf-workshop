@@ -1,0 +1,110 @@
+Description: Deploys an Auto Scaling Group of webservers with a load balancer
+
+Parameters:
+  Environment:
+    Description: Depicts the environment to be deployed with a stack
+    Type: String
+    AllowedValues:
+      - dev
+      - live
+    Default: dev
+  DesiredCapacity:
+    Description: desired capacity of webservers in the auto scaling group
+    Type: Number
+    Default: 2
+  PublicSubnetOneId:
+    Description: A public subnet Id to use for the load balancer
+    Type: AWS::EC2::Subnet::Id
+  PublicSubnetTwoId:
+    Description: A public subnet Id to use for the load balancer, in a different availability zone
+    Type: AWS::EC2::Subnet::Id
+
+
+Conditions:
+  IsLiveEnvironment: !Equals [ !Ref Environment, live ]
+
+
+Resources:
+  loadBalancerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: load balancer security group
+      SecurityGroupIngress:
+        -
+          IpProtocol: tcp
+          CidrIp: 0.0.0.0/0
+          FromPort: 80
+          ToPort: 80
+
+  loadBalancer:
+    Type: AWS::ElasticLoadBalancing::LoadBalancer
+    Properties:
+      CrossZone: true
+      Listeners:
+        -
+          InstancePort: 80
+          InstanceProtocol: HTTP
+          LoadBalancerPort: 80
+          Protocol: HTTP
+
+      SecurityGroups:
+        - !Sub ${loadBalancerSecurityGroup.GroupId}
+      Subnets:
+        - !Ref PublicSubnetOneId
+        - !Ref PublicSubnetTwoId
+
+  autoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      DesiredCapacity: !Ref DesiredCapacity
+      LaunchConfigurationName: !Ref launchConfiguration
+      LoadBalancerNames:
+        - !Ref loadBalancer
+      MaxSize: !If [ IsLiveEnvironment, 4, 2 ]
+      MinSize: !If [ IsLiveEnvironment, 2, 0 ]
+      VPCZoneIdentifier:
+        - !Ref PublicSubnetOneId
+        - !Ref PublicSubnetTwoId
+
+  launchConfiguration:
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Metadata:
+      AWS::CloudFormation::Init:
+        config:
+          packages:
+            yum:
+              httpd: []
+
+          services:
+            sysvinit:
+              httpd:
+                enabled: true
+                ensureRunning: true
+    Properties:
+      ImageId: ami-7c87d913
+      InstanceType: t2.micro
+      SecurityGroups:
+        - !Sub ${securityGroup.GroupId}
+      UserData:
+        Fn::Base64:
+          !Sub |
+            #!/bin/bash -eux
+            yum install -y aws-cfn-bootstrap
+            /opt/aws/bin/cfn-init -s ${AWS::StackId} -r launchConfiguration --region ${AWS::Region} -v
+
+  securityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: security group for webserver
+      SecurityGroupIngress:
+        -
+          IpProtocol: tcp
+          SourceSecurityGroupId: !Sub ${loadBalancerSecurityGroup.GroupId}
+          FromPort: 80
+          ToPort: 80
+
+Outputs:
+  loadBalancerDNSName:
+    Description: DNS name for the load balancer
+    Value: !Sub ${loadBalancer.DNSName}
+
