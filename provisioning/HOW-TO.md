@@ -1,0 +1,7 @@
+- A workshop utility assists in the provisioning of the necessary IAM roles and credentials required for workshop participants
+- The workshop utility works with one or more `provisioning` accounts and is operated using a `workshop utility` account
+- Provisioning accounts: Account(s) that all CloudFormation stacks are provisioned in
+    - Contains a role (to be assumed cross-account) to allow the user to `iam:PassRole` the required service role to CloudFormation. Role also allows the user to perform CloudFormation API actions.
+    - Contains a service role for CloudFormation to use when provisioning stacks  
+- Workshop utility account: Account that all API actions are performed from 
+    - Contains an IAM user that can generate temporary credentials for participants
