@@ -11,13 +11,17 @@ $ touch templates/template.yaml
 
 ```
 
+- (optional) You can create a service role for CloudFormation. See [here](../../service-role/HOW-TO.md) for instructions.
+
 - Create the stack using the template. Repeat the actions below as needed to create the stack successfully.
 
 ```
 # Create the stack
+# (optional) You may choose to assign a service role
 $ aws cloudformation create-stack \
     --stack-name webapp-dev \
-    --template-body file://templates/template.yaml
+    --template-body file://templates/template.yaml \
+    --role-arn arn:aws:iam::<AWS-ACCOUNT-ID>:role/AWS-CloudFormation-ServiceRole
 
 # Wait for stack creation to complete
 $ aws cloudformation wait stack-create-complete \
