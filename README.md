@@ -1,6 +1,6 @@
 A workshop to learn AWS CloudFormation
 
-This is structured as a series of [code katas]("https://en.wikipedia.org/wiki/Kata_(programming)")
+This is structured as a series of *code katas* (see "https://en.wikipedia.org/wiki/Kata_(programming)")
 
 Instructions
 ====
