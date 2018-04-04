@@ -1,6 +1,8 @@
-A workshop to learn AWS CloudFormation (organised as a series of [code katas]("https://en.wikipedia.org/wiki/Kata_(programming)"))
+A workshop to learn AWS CloudFormation
 
-Instructions:
+This is structured as a series of [code katas]("https://en.wikipedia.org/wiki/Kata_(programming)")
+
+Instructions
 ====
 
 - Review the [goal](doc/goal.md) 
@@ -8,7 +10,7 @@ Instructions:
 - Each story is achieved through a kata. Work through the katas sequentially. While each kata stands on its own, later katas build upon earlier ones.
 - Instructions for each kata are documented independently, beginning with [kata 1](doc/kata-1/HOW-TO.md) 
 
-Pre-requisites:
+Pre-requisites
 ====
 
 - an account on Github
