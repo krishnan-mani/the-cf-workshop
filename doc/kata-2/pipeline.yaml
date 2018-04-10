@@ -7,7 +7,6 @@ Parameters:
   RepositoryName:
     Description: The repository on Github to deploy from
     Type: String
-    Default: the-cf-workshop
   RepositoryOwner:
     Description: Account or organisation that owns the repository on Github
     Type: String

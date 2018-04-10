@@ -1,11 +1,38 @@
 Story 2: Create a pipeline for Continuous Deployment
 
+- Create a git repository locally
+- Add the template and commit to locally (to a `develop` branch)
+
+```
+$ git init .
+$ git checkout -b develop
+$ git add templates
+$ git commit -m "Adding template from first kata"
+
+```
+
+- Create a repository on your account on github.com and 
+    - Add it as a `remote` to your local repository
+    - Push your local changes to the `remote`
+    - [Obtain a personal access token](personal_access_token.md)
+
+```
+# $ git remote add origin YOUR_REPOSITORY_CLONE_URL_HERE
+# For example:
+$ git remote add origin git@github.com:krishnan-mani/the-cf-workshop.git
+
+# Push to the upstream remote
+$ git push -u origin develop
+
+```
+    
 - Create a pipeline to deploy the stack off the `develop` branch
 
 ```
 # Copy pipeline.yaml to templates/pipeline.yaml
 # Copy pipeline-parameters.example.json to templates/pipeline-parameters.json
 # Edit templates/pipeline-parameters.json and provide the repository owner and personal access token from Github
+
 # Create a stack to provision the pipeline in CodePipeline
 
 $ aws cloudformation create-stack \
