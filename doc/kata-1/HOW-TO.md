@@ -16,8 +16,13 @@ $ touch templates/template.yaml
 - Create the stack using the template. Repeat the actions below as needed to create the stack successfully.
 
 ```
-# Create the stack
+# Create the stack (without a service role assigned)
+$ aws cloudformation create-stack \
+    --stack-name webapp-dev \
+    --template-body file://templates/template.yaml 
+    
 # (optional) You may choose to assign a service role
+# Create the stack (with a service role assigned)
 $ aws cloudformation create-stack \
     --stack-name webapp-dev \
     --template-body file://templates/template.yaml \
