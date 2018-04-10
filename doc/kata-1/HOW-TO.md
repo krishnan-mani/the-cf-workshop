@@ -1,7 +1,7 @@
 
 Story 1: Deploy web application to an EC2 instance
 
-- (optional) You may choose to clone this repository (or your fork of it). Alternatively, create a local repository from scratch
+- You may choose to fork this repository into your account on github.com. Alternatively, create a local repository from scratch, and refer to the artifacts in this repository
 - Refer to the [CloudFormation AWS Resource Types Reference](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html)
 - Create a first template (using either YAML or JSON formats)
 
