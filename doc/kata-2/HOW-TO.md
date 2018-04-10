@@ -1,7 +1,7 @@
 Story 2: Create a pipeline for Continuous Deployment
 
 - Create a git repository locally
-- Add the template and commit to locally (to a `develop` branch)
+- Add the template and commit it locally (to a `develop` branch)
 
 ```
 $ git init .
