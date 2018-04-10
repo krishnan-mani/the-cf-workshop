@@ -2,4 +2,6 @@
     - Choose `Developer settings` in the navigation sidebar
     - Choose `Personal access tokens`
     - Click on `Generate new token`. Give it a descriptive name and choose scopes: `admin:repo_hook` and `repo`
-    - Click on `Generate token` and copy the string that is generated. Caution: Do not check this into version control!
+    - Click on `Generate token` and copy the string that is generated. 
+        - You will only have one opportunity to copy the token string
+        - Caution: The token is a secret. Do not check this into version control, or otherwise reveal it!
