@@ -39,14 +39,21 @@ $ aws cloudformation describe-stack-events \
 # Describe the stack
 $ aws cloudformation describe-stacks \
     --stack-name webapp-dev
+
+```
+
+- Enhance the template incrementally to add resources and resource configuration, or to fix issues
+- Update the existing stack, or delete and re-create the stack   
     
+```    
 # Update the stack
 $ aws cloudformation update-stack \
     --stack-name webapp-dev \
     --template-body file://templates/template.yaml
     
 # Wait for stack update to complete
-$ aws cloudformation wait stack-update-complete --stack-name webapp-dev    
+$ aws cloudformation wait stack-update-complete \
+    --stack-name webapp-dev    
 
 # Delete stack (if needed)
 $ aws cloudformation delete-stack \
