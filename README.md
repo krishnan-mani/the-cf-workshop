@@ -1,6 +1,7 @@
 A workshop to learn AWS CloudFormation
 
-This is structured as a series of *code katas* (see "https://en.wikipedia.org/wiki/Kata_(programming)")
+The workshop promotes both the knowledge of CloudFormation concepts and skills, as well as good practices (including Continuous Deployment) 
+It is structured as a series of *code katas* (see "https://en.wikipedia.org/wiki/Kata_(programming)")
 
 Instructions
 ====
