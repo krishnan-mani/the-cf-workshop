@@ -24,7 +24,7 @@ Pre-requisites
 Organisation
 ====
 
-- Templates and notes for each kata are in a folder in `doc` named after the kata (say, [kata-1](doc/kata-1))
+- Templates and notes for each kata are in a folder in [`doc`](doc) named after the kata (say, [kata-1](doc/kata-1))
 - Instructions for each kata are in the HOW-TO.md document (say, [HOW-TO](doc/kata-1/HOW-TO.md))
 - For each kata, a tested template is provided for reference (say, [Story 1 template](doc/kata-1/story_1-template.yaml)). You may refer to it at the conclusion of the kata. 
 - for Continuous Deployment pipelines: tested [CloudFormation template](doc/kata-2/pipeline.yaml) and [example parameter file](doc/kata-2/pipeline-parameters.example.json) to be used to provision stacks for the pipelines are provided
