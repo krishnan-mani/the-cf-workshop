@@ -18,7 +18,9 @@ Pre-requisites
 - an account on Github
 - git version control client
 - AWS account
-- AWS CLI installed and configured with credentials privileged to operate upon CloudFormation and EC2 resources
+- AWS CLI installed and configured with credentials privileged to operate upon CloudFormation and EC2 resources, etc. Specifically: 
+    - the user should either have privileges to provision the resources in the stack, OR 
+    - alternatively, the user should be able to `iam:PassRole` a role that gives CloudFormation the privileges to provision the resources in the stack 
 - text editor to edit YAML and JSON files
 
 Organisation
