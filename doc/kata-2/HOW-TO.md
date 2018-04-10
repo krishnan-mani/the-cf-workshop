@@ -1,10 +1,8 @@
 Story 2: Create a pipeline for Continuous Deployment
 
-- Create a git repository locally
 - Add the template and commit it locally (to a `develop` branch)
 
 ```
-$ git init .
 $ git checkout -b develop
 $ git add templates
 $ git commit -m "Adding template from first kata"
@@ -17,6 +15,7 @@ $ git commit -m "Adding template from first kata"
     - [Obtain a personal access token](personal_access_token.md)
 
 ```
+# Add a remote pointing to the upstream repository on github.com
 # $ git remote add origin YOUR_REPOSITORY_CLONE_URL_HERE
 # For example:
 $ git remote add origin git@github.com:krishnan-mani/the-cf-workshop.git
@@ -31,7 +30,7 @@ $ git push -u origin develop
 ```
 # Copy pipeline.yaml to templates/pipeline.yaml
 # Copy pipeline-parameters.example.json to templates/pipeline-parameters.json
-# Edit templates/pipeline-parameters.json and provide the repository owner and personal access token from Github
+# Edit templates/pipeline-parameters.json and provide the repository name, the repository owner, and personal access token from Github
 
 # Create a stack to provision the pipeline in CodePipeline
 
